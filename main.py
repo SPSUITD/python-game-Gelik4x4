@@ -1,4 +1,6 @@
 import pygame
+from cat import Cat
+
 SIZE = WIDTH, HEIGHT = 1200, 600
 SCREEN = pygame.display.set_mode(SIZE)
 TILE_SIZE = 40
