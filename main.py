@@ -1,39 +1,68 @@
-import pygame
-from cat import Cat
+from functions import load_level
+from map import Map
+from sprites import *
 
-SIZE = WIDTH, HEIGHT = 1200, 600
-SCREEN = pygame.display.set_mode(SIZE)
-TILE_SIZE = 40
+
 FPS = 30
 icon = pygame.image.load('images/icon.png')
 pygame.display.set_icon(icon)
 pygame.display.set_caption('CAT-LIFE')
 bg_image = pygame.image.load('images/background.png')
 
+
+def start_screen(screen):
+    background = pygame.transform.scale(load_image('start_background.png'), SCREEN_SIZE)
+    clock = pygame.time.Clock()
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                return True
+
+        screen.fill(BLACK)
+        screen.blit(background, (0, 0))
+        pygame.display.flip()
+        clock.tick(FPS)
+    return None
+
+
+def game_screen(screen, name_level):
+    all_sprites.empty()
+    tiles_sprites.empty()
+
+    clock = pygame.time.Clock()
+    level = load_level(name_level)
+    map = Map(screen, level)
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        all_sprites.update()
+        screen.fill(BLACK)
+        all_sprites.draw(screen)
+        pygame.display.flip()
+        clock.tick(FPS)
+
+
+
 def main():
-    walk_right = [
-        pygame.image.load('sprites/right_1.png'),
-        pygame.image.load('sprites/right_2.png'),
-        pygame.image.load('sprites/right_3.png'),
-        pygame.image.load('sprites/right_4.png'),
-        pygame.image.load('sprites/right_5.png'),
-        pygame.image.load('sprites/right_6.png'),
-    ]
-    an_count = 0
     pygame.init()
     game = True
     while game:
-        SCREEN.blit(bg_image, (0, 0))
-        SCREEN.blit(walk_right[an_count], (300, 300))
-        if an_count == 5:
-            an_count = 0
+        screen = pygame.display.set_mode(SCREEN_SIZE)
+        if start_screen(screen) is not None:
+            for i in range(1, 2):
+                result_game = game_screen(screen, f'level {i}.txt')
         else:
-            an_count += 1
-        pygame.display.update()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                game = False
-                pygame.quit()
+            game = False
+        screen.fill(BLACK)
+    pygame.quit()
 
 
 if __name__ == "__main__":
