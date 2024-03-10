@@ -1,5 +1,19 @@
 import os
 import pygame
+from settings import *
+
+class Camera:
+    def __init__(self):
+        self.dx = 0
+        self.dy = 0
+
+    def apply(self, obj):
+        obj.rect.x += self.dx
+        obj.rect.y += self.dy
+
+    def update(self, target):
+        self.dx = -(target.rect.x + target.rect.w // 2 - SCREEN_WIDTH // 2)
+        self.dy = -(target.rect.y + target.rect.h // 2 - SCREEN_HEIGHT // 2)
 
 
 def load_level(filename):
@@ -12,6 +26,10 @@ def load_level(filename):
 
 def load_image(filename):
     fullname = os.path.join('images', filename)
-    image = pygame.image.load(fullname).convert()
-    image = image.convert_alpha()
+    image = pygame.image.load(fullname)
     return image
+
+
+def load_image_tile(tile_image):
+    image = load_image(tile_image)
+    return pygame.transform.scale(image, (TILE_WIDTH, TILE_HEIGHT))
