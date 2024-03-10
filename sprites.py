@@ -39,9 +39,12 @@ class Cat(AnimatedSprite):
         self.index_frame = 0
         self.char = 'C'
         self.speed = 10
+        self.side_right = True
 
     def blit(self, screen):
         image = self.frames[self.index_frame][self.cur_frame]
+        if not self.side_right:
+            image = pygame.transform.flip(image, True, False)
         #self.image = pygame.transform.scale(image, (TILE_WIDTH, TILE_HEIGHT))
         screen.blit(image, (self.x, self.y))
 
@@ -59,18 +62,33 @@ class Cat(AnimatedSprite):
 
     def move_right(self):
         self.index_frame = 0
+        self.side_right = True
         self.cur_frame = (self.cur_frame + 1) % 6
         self.x += self.speed
 
     def move_left(self):
-        self.index_frame = 1
+        self.index_frame = 0
+        self.side_right = False
         self.cur_frame = (self.cur_frame + 1) % 6
         self.x -= self.speed
 
-    def move_jump_right(self):
+    def move_jump(self):
         self.index_frame = 2
         self.cur_frame = 3
-        self.x += self.speed
+        if self.side_right:
+            self.x += self.speed
+        else:
+            self.x -= self.speed
+
+    def move_jump_left(self):
+        self.index_frame = 2
+        self.side_right = False
+        self.cur_frame = 3
+        self.x -= self.speed
+
+    def stop(self):
+        self.index_frame = 0
+        self.cur_frame = 0
 
     # def update(self):
     #     index_frame = 0

@@ -13,10 +13,9 @@ pygame.display.set_caption('CAT-LIFE')
 
 
 def start_screen(screen):
-    background = pygame.transform.scale(load_image('start_background.png'), SCREEN_SIZE)
     clock = pygame.time.Clock()
-
     running = True
+    i = 1
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -25,6 +24,10 @@ def start_screen(screen):
                 return True
 
         screen.fill(BLACK)
+        if i <= 52:
+            background = pygame.transform.scale(load_image(f'start{i}.jpg'), SCREEN_SIZE)
+            i += 1
+
         screen.blit(background, (0, 0))
         pygame.display.flip()
         clock.tick(FPS)
@@ -52,18 +55,22 @@ def game_screen(screen, name_level):
             # if event.type == pygame.KEYDOWN:
             #     if event.key == pygame.K_SPACE:
             #         cat.move_jump_right()
-        if pygame.key.get_pressed()[pygame.K_d]:
-            cat.move_right()
-        if pygame.key.get_pressed()[pygame.K_a]:
-            cat.move_left()
-        if pygame.key.get_pressed()[pygame.K_SPACE]:
-            cat.move_jump_right()
+        list_of_keys = pygame.key.get_pressed()
+        if any(list_of_keys):
+            if list_of_keys[pygame.K_d]:
+                cat.move_right()
+            if list_of_keys[pygame.K_a]:
+                cat.move_left()
+            if list_of_keys[pygame.K_SPACE]:
+                cat.move_jump()
+        else:
+            cat.stop()
 
         # camera.update(cat)
         # for sprite in all_sprites:
         #     camera.apply(sprite)
         tiles_sprites.update()
-        screen.blit(background, (0, 0))
+        # screen.blit(background, (0, 0))
         tiles_sprites.draw(screen)
         cat.blit(screen)
         # screen.blit(load_image("sprites.png"), (0, 0))
@@ -72,7 +79,6 @@ def game_screen(screen, name_level):
         # pygame.time.wait(5000)
         screen.fill(WHITE)
         clock.tick(FPS)
-
 
 
 def main():
