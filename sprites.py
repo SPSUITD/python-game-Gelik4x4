@@ -24,9 +24,9 @@ class AnimatedSprite(pygame.sprite.Sprite):
                 frame_location = (self.rect.w * j, self.rect.h * i)
                 self.frames[i].append(sheet.subsurface(pygame.Rect(frame_location, self.rect.size)))
 
-    def update(self):
-        self.cur_frame = (self.cur_frame + 1) % len(self.frames)
-        self.image = self.frames[self.cur_frame]
+    # def update(self):
+    #     self.cur_frame = (self.cur_frame + 1) % len(self.frames)
+    #     self.image = self.frames[self.cur_frame]
 
 
 class Cat(AnimatedSprite):
@@ -46,6 +46,7 @@ class Cat(AnimatedSprite):
         if not self.side_right:
             image = pygame.transform.flip(image, True, False)
         #self.image = pygame.transform.scale(image, (TILE_WIDTH, TILE_HEIGHT))
+        self.rect.update(self.x, self.y, self.rect.w, self.rect.h)
         screen.blit(image, (self.x, self.y))
 
     def get_i_and_j(self):
@@ -75,6 +76,7 @@ class Cat(AnimatedSprite):
     def move_jump(self):
         self.index_frame = 2
         self.cur_frame = 3
+        self.y -= 30
         if self.side_right:
             self.x += self.speed
         else:

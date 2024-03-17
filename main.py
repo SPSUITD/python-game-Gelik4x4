@@ -46,6 +46,7 @@ def game_screen(screen, name_level):
     level = load_level(name_level)
     map = Map(screen, level)
     cat = map.get_cat()
+    time_fall = None
 
     running = True
     while running:
@@ -56,16 +57,41 @@ def game_screen(screen, name_level):
             #     if event.key == pygame.K_SPACE:
             #         cat.move_jump_right()
         list_of_keys = pygame.key.get_pressed()
+
+        # print(cat.rect)
         if any(list_of_keys):
             if list_of_keys[pygame.K_d]:
-                cat.move_right()
+                for cat in cat_sprites:
+                    collade_obj = pygame.sprite.spritecollideany(cat, tiles_sprites)
+                    if collade_obj and collade_obj.rect.left <= cat.rect.right <= collade_obj.rect.right and \
+                             cat.rect.bottom >= collade_obj.rect.bottom:
+                        cat.stop()
+                    else:
+                        cat.move_right()
             if list_of_keys[pygame.K_a]:
-                cat.move_left()
+                for cat in cat_sprites:
+                    collade_obj = pygame.sprite.spritecollideany(cat, tiles_sprites)
+                    if collade_obj and collade_obj.rect.left <= cat.rect.left <= collade_obj.rect.right and \
+                             cat.rect.bottom >= collade_obj.rect.bottom:
+                        cat.stop()
+                    else:
+                        cat.move_left()
             if list_of_keys[pygame.K_SPACE]:
                 cat.move_jump()
+                if time_fall is None:
+                    time_fall = pygame.time.get_ticks() + 400
+                elif pygame.time.get_ticks() > time_fall:
+                    cat.stop()
         else:
+            time_fall = None
             cat.stop()
 
+        for cat in cat_sprites:
+            collade_obj = pygame.sprite.spritecollideany(cat, tiles_sprites)
+            if collade_obj and collade_obj.rect.top <= cat.rect.bottom:
+                cat.y += 0
+            else:
+                cat.y += 20
         # camera.update(cat)
         # for sprite in all_sprites:
         #     camera.apply(sprite)
@@ -73,6 +99,7 @@ def game_screen(screen, name_level):
         # screen.blit(background, (0, 0))
         tiles_sprites.draw(screen)
         cat.blit(screen)
+
         # screen.blit(load_image("sprites.png"), (0, 0))
         # cat_sprites.draw(screen)
         pygame.display.flip()
