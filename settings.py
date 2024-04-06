@@ -6,6 +6,8 @@ I_CENTER, J_CENTER = SCREEN_HEIGHT // CELL_SIZE // 2, SCREEN_WIDTH // CELL_SIZE 
 tile_images = {"wall": 'unknown.jpg',
                "unknown": 'unknown.jpg'}
 
+GRAVITATION = 10
+
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)

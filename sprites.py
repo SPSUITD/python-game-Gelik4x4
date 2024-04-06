@@ -32,7 +32,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
 class Cat(AnimatedSprite):
     def __init__(self, i, j):
         sheet = load_image("sprites.png")
-        columns, rows = 6, 3
+        columns, rows = 24, 4
         self.i, self.j = i, j
         self.x, self.y = j * CELL_SIZE, i * CELL_SIZE
         super().__init__(sheet, columns, rows, self.x, self.y)
@@ -62,41 +62,42 @@ class Cat(AnimatedSprite):
         return self.y
 
     def move_right(self):
-        self.index_frame = 0
+        self.index_frame = 1
         self.side_right = True
-        self.cur_frame = (self.cur_frame + 1) % 6
+        self.cur_frame = (self.cur_frame + 1) % 24
         self.x += self.speed
 
     def move_left(self):
-        self.index_frame = 0
+        self.index_frame = 1
         self.side_right = False
-        self.cur_frame = (self.cur_frame + 1) % 6
+        self.cur_frame = (self.cur_frame + 1) % 24
         self.x -= self.speed
 
     def move_jump(self):
         self.index_frame = 2
-        self.cur_frame = 3
-        self.y -= 30
-        if self.side_right:
-            self.x += self.speed
+        self.cur_frame = (self.cur_frame + 1) % 24
+        if self.cur_frame < 5:
+            self.y += 0
+        elif self.cur_frame < 10:
+            self.y -= (40 + GRAVITATION)
+        elif self.cur_frame < 15:
+            self.y += 0
+        elif self.cur_frame < 20:
+            self.y += (20 - GRAVITATION)
         else:
-            self.x -= self.speed
-
-    def move_jump_left(self):
-        self.index_frame = 2
-        self.side_right = False
-        self.cur_frame = 3
-        self.x -= self.speed
+            self.y += 0
+        # if self.side_right:
+        #     self.x += round(2.5 * self.speed)
+        # else:
+        #     self.x -= round(2.5 * self.speed)
 
     def stop(self):
         self.index_frame = 0
         self.cur_frame = 0
 
-    # def update(self):
-    #     index_frame = 0
-    #     self.cur_frame = 0
-    #     image = self.frames[index_frame][self.cur_frame]
-    #     self.image = pygame.transform.scale(image, (TILE_WIDTH, TILE_HEIGHT))
+    def update(self, dx, dy):
+        self.x += dx
+        self.y += dy
 
     def get_char(self):
         return self.char

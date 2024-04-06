@@ -6,7 +6,7 @@ from map import Map
 from sprites import *
 
 
-FPS = 30
+FPS = 60
 icon = pygame.image.load('images/icon.png')
 pygame.display.set_icon(icon)
 pygame.display.set_caption('CAT-LIFE')
@@ -47,7 +47,6 @@ def game_screen(screen, name_level):
     map = Map(screen, level)
     cat = map.get_cat()
     time_fall = None
-
     running = True
     while running:
         for event in pygame.event.get():
@@ -58,13 +57,12 @@ def game_screen(screen, name_level):
             #         cat.move_jump_right()
         list_of_keys = pygame.key.get_pressed()
 
-        # print(cat.rect)
         if any(list_of_keys):
             if list_of_keys[pygame.K_d]:
                 for cat in cat_sprites:
                     collade_obj = pygame.sprite.spritecollideany(cat, tiles_sprites)
                     if collade_obj and collade_obj.rect.left <= cat.rect.right <= collade_obj.rect.right and \
-                             cat.rect.bottom >= collade_obj.rect.bottom:
+                            cat.rect.bottom >= collade_obj.rect.bottom:
                         cat.stop()
                     else:
                         cat.move_right()
@@ -72,16 +70,25 @@ def game_screen(screen, name_level):
                 for cat in cat_sprites:
                     collade_obj = pygame.sprite.spritecollideany(cat, tiles_sprites)
                     if collade_obj and collade_obj.rect.left <= cat.rect.left <= collade_obj.rect.right and \
-                             cat.rect.bottom >= collade_obj.rect.bottom:
+                            cat.rect.bottom >= collade_obj.rect.bottom:
                         cat.stop()
                     else:
                         cat.move_left()
             if list_of_keys[pygame.K_SPACE]:
-                cat.move_jump()
-                if time_fall is None:
-                    time_fall = pygame.time.get_ticks() + 400
-                elif pygame.time.get_ticks() > time_fall:
-                    cat.stop()
+                for cat in cat_sprites:
+                    collade_obj = pygame.sprite.spritecollideany(cat, tiles_sprites)
+                    if collade_obj and collade_obj.rect.left <= cat.rect.right <= collade_obj.rect.right and \
+                            cat.rect.bottom >= collade_obj.rect.bottom:
+                        cat.stop()
+                    elif collade_obj and collade_obj.rect.left <= cat.rect.left <= collade_obj.rect.right and \
+                            cat.rect.bottom >= collade_obj.rect.bottom:
+                        cat.stop()
+                    else:
+                        cat.move_jump()
+                # if time_fall is None:
+                #     time_fall = pygame.time.get_ticks() + 1000
+                # elif pygame.time.get_ticks() > time_fall:
+                #     cat.stop()
         else:
             time_fall = None
             cat.stop()
@@ -91,10 +98,12 @@ def game_screen(screen, name_level):
             if collade_obj and collade_obj.rect.top <= cat.rect.bottom:
                 cat.y += 0
             else:
-                cat.y += 20
-        # camera.update(cat)
-        # for sprite in all_sprites:
-        #     camera.apply(sprite)
+                cat.y += GRAVITATION
+
+        camera.update(cat)
+        cat.update(camera.dx, camera.dy)
+        for sprite in all_sprites:
+            camera.apply(sprite)
         tiles_sprites.update()
         # screen.blit(background, (0, 0))
         tiles_sprites.draw(screen)

@@ -1,6 +1,10 @@
-WWWWWWWWWWWWWW
-W............W
-W............W
-W.....C......W
-W........W...W
-WWWWWWWWWWWWWW
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+W............................W
+W............................W
+W..................W.........W
+W....WWWW.....WWW..WW........W
+W..................WWWW......W
+W........C....WWW........W...W
+W........W.............WW....W
+W.......WW............WWW....W
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
