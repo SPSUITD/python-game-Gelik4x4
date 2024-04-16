@@ -8,6 +8,7 @@ all_sprites = pygame.sprite.Group()
 sprites_back = pygame.sprite.Group()
 sprites_middle = pygame.sprite.Group()
 sprites_front = pygame.sprite.Group()
+sprites_collade = pygame.sprite.Group()
 cat_sprites = pygame.sprite.Group()
 
 
@@ -21,18 +22,21 @@ class AnimatedSprite(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.frame_row = 0  # номер ряда фрейма, если несколько рядов фреймов в одном файле
-        self.frame_index = 0
+        self.index = 0  # индекс фрейма из ряда
+        self.side_right = True
         self.animation_frames = sprite_sheet_data['frames']
         self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         # Обновляем анимацию
-        self.frame_index += 1
-        self.frame_index %= 24 # ToDO: поменять
-        self.frame_index += self.frame_row * 24
-        if self.frame_index >= len(self.animation_frames):
-            self.frame_index = 0
-        self.image = self.sprite_sheet.subsurface(pygame.Rect(self.animation_frames[self.frame_index]))
+        self.index += 1
+        self.index %= 24 # ToDO: поменять
+        frame_index = self.index + self.frame_row * 24
+        # if self.frame_index >= len(self.animation_frames):
+        #     self.frame_index = 0
+        self.image = self.sprite_sheet.subsurface(pygame.Rect(self.animation_frames[frame_index]))
+        if not self.side_right:
+            self.image = pygame.transform.flip(self.image, True, False)
         self.mask = pygame.mask.from_surface(self.image)
 
 
@@ -41,7 +45,7 @@ class Cat(AnimatedSprite):
         sprite_sheet_data = load_sprite_sheet("sprites.png", 100, 100)
         super().__init__(sprite_sheet_data, x, y)
         self.char = 'C'
-        self.speed = 10
+        self.speed = 7
         self.side_right = True
 
     def move_right(self):
@@ -55,32 +59,39 @@ class Cat(AnimatedSprite):
         self.side_right = False
         self.rect.x -= self.speed
         self.rect.y -= 5
-#
-#     def move_jump(self):
-#         self.index_frame = 2
-#         self.cur_frame = (self.cur_frame + 1) % 24
-#         if self.cur_frame < 5:
-#             self.y += 0
-#         elif self.cur_frame < 10:
-#             self.y -= (40 + GRAVITATION)
-#         elif self.cur_frame < 15:
-#             self.y += 0
-#         elif self.cur_frame < 20:
-#             self.y += (20 - GRAVITATION)
-#         else:
-#             self.y += 0
-#         # if self.side_right:
-#         #     self.x += round(2.5 * self.speed)
-#         # else:
-#         #     self.x -= round(2.5 * self.speed)
-#
+
+    def _jump(self, height_jump):
+        if self.index < 5:
+            self.rect.y += 0
+        elif self.index < 10:
+            self.rect.y -= (height_jump + GRAVITATION)
+        elif self.index < 15:
+            self.rect.y += 0
+        elif self.index < 20:
+            self.rect.y += (height_jump // 2 - GRAVITATION)
+        else:
+            self.rect.y += 0
+
+    def move_sit_down(self):
+        self.frame_row = 3
+        self.index = 0
+        self.rect.x += 0
+
+    def move_jump(self):
+        self.frame_row = 3
+        self._jump(40)
+        self.rect.x += 0
+    def move_jump_into_distance(self):
+        self.frame_row = 2
+        self._jump(10)
+        if self.side_right:
+            self.rect.x += round(1.6 * self.speed)
+        else:
+            self.rect.x -= round(1.6 * self.speed)
+
     def stop(self):
         self.frame_row = 0
-
-
-    # def update(self, dx, dy):
-    #     self.x += dx
-    #     self.y += dy
+        # self.index = 0
 
 
 # Класс для создания статических спрайтов

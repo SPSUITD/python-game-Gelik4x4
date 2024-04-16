@@ -3,17 +3,22 @@ import pygame
 from settings import *
 
 class Camera:
-    def __init__(self):
-        self.dx = 0
-        self.dy = 0
+    def __init__(self, target):
+        self.x = 0
+        self.y = 0
+        self.target = target
+        self.smoothing_factor = 0.5  # Фактор сглаживания (0.1 = 10% скорости)
 
     def apply(self, obj):
-        obj.rect.x += self.dx
-        obj.rect.y += self.dy
+        obj.rect.x += self.x
+        obj.rect.y += self.y
 
-    def update(self, target):
-        self.dx = -(target.rect.x + target.rect.w // 2 - SCREEN_WIDTH // 2)
-        self.dy = -(target.rect.y + target.rect.h // 2 - SCREEN_HEIGHT // 2)
+    def update(self):
+        if self.target:
+            target_x = -(self.target.rect.x + self.target.rect.w / 2 - SCREEN_WIDTH / 2)
+            target_y = -(self.target.rect.y + self.target.rect.h / 2 - SCREEN_HEIGHT / 2)
+            self.x = self.x * (1 - self.smoothing_factor) + target_x * self.smoothing_factor
+            self.y = self.y * (1 - self.smoothing_factor) + target_y * self.smoothing_factor
 
 
 def load_level(filename):

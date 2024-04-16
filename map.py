@@ -4,40 +4,15 @@ from sprites import *
 class Map:
     def __init__(self, screen, level):
         self.screen = screen
-        self.row_count = len(level)
-        self.col_count = len(level[0])
-        self.tiles_board = [[None for j in range(self.col_count)] for i in range(self.row_count)]
-        self.objects_board = [[None for j in range(self.col_count)] for i in range(self.row_count)]
-        self.cat = None
-
-        for i in range(self.row_count):
-            for j in range(self.col_count):
-                if level[i][j] == 'W':
-                    self.tiles_board[i][j] = Wall(i, j)
-
-        for i in range(self.row_count):
-            for j in range(self.col_count):
-                if level[i][j] == 'C':
-                    self.cat = Cat(i, j)
-                    self.objects_board[i][j] = self.cat
-
-    def get_object_char(self, i, j):
-        return self.objects_board[i][j].get_char()
-
-    def get_object(self, i, j):
-        return self.objects_board[i][j]
-
-    def set_object(self, i, j, obj):
-        self.objects_board[i][j] = obj
-
-    def get_tile_char(self, i, j):
-        return self.tiles_board[i][j].get_char()
-
-    def get_tile_object(self, i, j):
-        return self.tiles_board[i][j]
-
-    def set_tile(self, i, j, obj):
-        self.tiles_board[i][j] = obj
-
-    def get_cat(self):
-        return self.cat
+        sprites_back.add(StaticSprite('rock2_b.png', 0, 200))
+        sprites_middle.add(StaticSprite('rock2_m.png', 0, 200))
+        sprites_collade.add(StaticSprite('rock2_collade.png', 0, 200))
+        sprites_back.add(StaticSprite('rock3_b.png', 899, 300))
+        sprites_middle.add(StaticSprite('rock3_m.png', 899, 300))
+        sprites_front.add(StaticSprite('rock3_f.png', 899, 300))
+        sprites_back.add(StaticSprite('rock4_b.png', 899 + 300, 400))
+        sprites_middle.add(StaticSprite('rock4_m.png', 899 + 300, 400))
+        sprites_front.add(StaticSprite('rock4_f.png', 899 + 300, 400))
+        sprites_back.add(StaticSprite('house_b.png', 899 + 300 + 200, 200))
+        sprites_middle.add(StaticSprite('house_m.png', 899 + 300 + 200, 200))
+        sprites_front.add(StaticSprite('house_f.png', 899 + 300 + 200, 200))
