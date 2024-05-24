@@ -1,15 +1,15 @@
 import pygame
-from settings import *
-from functions import load_image, load_level
-from functions import Camera
-from map import Map
-from sprites import *
 
+from constants import SCREEN_SIZE, SCREEN_WIDTH, FPS
+from constants import WHITE, BLACK
+from constants import LOSE, WIN
 
-FPS = 60
-icon = pygame.image.load('images/icon.png')
-pygame.display.set_icon(icon)
-pygame.display.set_caption('CAT-LIFE')
+from load_functions import load_image, play_sound
+from sprite_group_functions import clear_groups_sprites
+from sprite_group_functions import all_sprites, cat_sprites
+
+from board import Board
+from sprites import Cat
 
 
 def start_screen(screen):
@@ -25,120 +25,104 @@ def start_screen(screen):
 
         screen.fill(BLACK)
         if i <= 52:
-            background = pygame.transform.scale(load_image(f'start{i}.jpg'), SCREEN_SIZE)
+            if i == 1:
+                play_sound("slash1.mp3")
+            elif i == 12:
+                play_sound("slash2.mp3")
+            elif i == 25:
+                play_sound("meow.mp3")
+            background = pygame.transform.scale(load_image(f'start_screen/start{i}.jpg'), SCREEN_SIZE)
             i += 1
 
         screen.blit(background, (0, 0))
         pygame.display.flip()
-        clock.tick(FPS)
+        clock.tick(FPS // 1.8)
     return None
 
 
-def game_screen(screen, name_level):
-    all_sprites.empty()
-    sprites_back.empty()
-    sprites_middle.empty()
-    sprites_front.empty()
-    sprites_collade.empty()
-    cat_sprites.empty()
-
-    background = pygame.transform.scale(load_image('back.png'), SCREEN_SIZE)
+def game_screen(screen, cat, level):
     clock = pygame.time.Clock()
-    level = load_level(name_level)
-    map = Map(screen, level)
-    # cat = map.get_cat()
-    cat = Cat(0, 0)
-    cat_sprites.add(cat)
-    camera = Camera(cat)
 
-    fall = False
+    clear_groups_sprites()
+    all_sprites.add(cat)
+    board = Board(screen, cat, level)
+
     running = True
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    cat.index = 0
-
-        collade = False
-        for sprite in sprites_middle:
-            collade_object = pygame.sprite.collide_mask(cat, sprite)
-            if collade_object:
-                collade = True
-
-        collade_2 = False
-        for sprite in sprites_collade:
-            collade_object = pygame.sprite.collide_mask(cat, sprite)
-            if collade_object:
-                collade_2 = collade_object
-
-        if collade_2:
-            cat.rect.x += 10
-            # cat.stop()
-
-        if collade:
-            cat.rect.y += 0
-        else:
-            cat.rect.y += GRAVITATION
-
-        if not fall:
-            list_of_keys = pygame.key.get_pressed()
-            if any(list_of_keys):
-                if list_of_keys[pygame.K_d] and not list_of_keys[pygame.K_SPACE]:
-                    cat.move_right()
-                # else:
-                #     cat.stop()
-                #     print("rs")
-            #         for cat in cat_sprites:
-            #             collade_obj = pygame.sprite.spritecollideany(cat, tiles_sprites)
-            #             if collade_obj and collade_obj.rect.left <= cat.rect.right <= collade_obj.rect.right and \
-            #                     cat.rect.bottom >= collade_obj.rect.bottom:
-            #                 cat.stop()
-            #             else:
-            #                 cat.move_right()
-                if list_of_keys[pygame.K_a] and not list_of_keys[pygame.K_SPACE]:
-                    cat.move_left()
-                if list_of_keys[pygame.K_SPACE] and not list_of_keys[pygame.K_a] and not list_of_keys[pygame.K_d]:
-                    cat.move_jump()
-                if list_of_keys[pygame.K_d] and list_of_keys[pygame.K_SPACE]:
-                    cat.side_right = True
-                    cat.move_jump_into_distance()
-                if list_of_keys[pygame.K_a] and list_of_keys[pygame.K_SPACE]:
-                    cat.side_right = False
-                    cat.move_jump_into_distance()
-                if list_of_keys[pygame.K_s]:
-                    cat.move_sit_down()
-            else:
-                cat.stop()
-
-        camera.update()
-        for sprite in all_sprites:
-            camera.apply(sprite)
-
-        all_sprites.update()
-
-        screen.fill(WHITE)
-        sprites_middle.draw(screen)
-        sprites_collade.draw(screen)
-        screen.blit(background, (0, 0))
-        sprites_back.draw(screen)
-        cat_sprites.draw(screen)
-        sprites_front.draw(screen)
+        
+        board.update()
+        if board.result_game is not None:
+            running = False
 
         pygame.display.flip()
         clock.tick(FPS)
 
+    return board.result_game
+
+
+def points_screen(screen, cat, result_game):
+    clock = pygame.time.Clock()
+    font = pygame.font.Font("data/font/impact.ttf", 40)
+    points_to_text = font.render(f"SCORE {cat.collected_points}", 1, WHITE) 
+
+    if result_game == LOSE:
+        image = 'lose.png' 
+    elif result_game == WIN:
+        image = 'win.png'
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                return True
+
+        screen.fill(BLACK)
+        background = pygame.transform.scale(load_image(image), SCREEN_SIZE)
+        screen.blit(background, (0, 0))
+        screen.blit(points_to_text, (SCREEN_WIDTH // 2 - points_to_text.get_rect().width // 2, 496))
+        pygame.display.flip()
+        clock.tick(FPS)
+
+    return False
+
 
 def main():
     pygame.init()
-    game = True
+    screen = pygame.display.set_mode(SCREEN_SIZE)
+    pygame.display.set_caption('CAT-LIFE')
+    icon = load_image('icon.png')
+    pygame.display.set_icon(icon)
+
+    cat = Cat()
+    number_of_level = 1
+    game = start_screen(screen)
+    pygame.mixer.music.load('data/sounds/back_music.mp3')
+    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.play()
     while game:
-        screen = pygame.display.set_mode(SCREEN_SIZE)
-        if start_screen(screen) is not None:
-            for i in range(1, 2):
-                result_game = game_screen(screen, f'level {i}.txt')
+        pygame.mixer.music.unpause()
+        result_game = game_screen(screen, cat, f'level_{number_of_level}.txt')
+        if result_game is None:
+            pygame.mixer.music.pause()
+            game =  False
+        elif result_game == LOSE:
+            pygame.mixer.music.pause()
+            points_screen(screen, cat, result_game)
+            cat_sprites.empty()
+            cat = Cat()
+            number_of_level = 1
+            game = start_screen(screen)
+        elif result_game == WIN:
+            pygame.mixer.music.pause()
+            points_screen(screen, cat, result_game)
+            number_of_level = number_of_level + 1 if number_of_level != 2 else 1
         else:
+            pygame.mixer.music.pause()
             game = False
         screen.fill(BLACK)
     pygame.quit()
