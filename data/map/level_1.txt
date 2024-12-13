@@ -1,0 +1,59 @@
+StaticSprite rock4_b 0 1261
+StaticSprite rock4_f 0 1261
+StaticSprite rock3_b 979 1269
+StaticSprite rock3_f 979 1269
+StaticSprite rock4_b 2275 1261
+StaticSprite rock4_f 2275 1261
+
+StaticSprite hang7_b 616 1021
+StaticSprite hang7_f 616 1021
+StaticSprite hang2_b 187 355
+StaticSprite hang2_f 187 355
+StaticSprite hang1_b 739 578
+StaticSprite hang1_f 739 578
+StaticSprite hang1_b 1313 1060
+StaticSprite hang1_f 1313 1060
+StaticSprite hang4_b 1163 428
+StaticSprite hang4_f 1163 428
+StaticSprite hang1_b 1781 411
+StaticSprite hang1_f 1781 411
+StaticSprite hang6_b 1470 664
+StaticSprite hang6_f 1470 664
+StaticSprite hang17_b 1856 1121
+StaticSprite hang17_f 1856 1121
+
+StaticSprite house4_b 1719 945
+StaticSprite house4_f 1719 945
+
+Platform 540 20 20 1308 
+Platform 240 20 626 1029 
+Platform 160 20 999 1312 
+Platform 180 20 1328 1072 
+Platform 250 20 222 367 
+Platform 180 20 753 592 
+Platform 180 20 1184 442 
+Platform 180 20 1490 682 
+Platform 180 20 1797 427 
+Platform 150 20 1740 965 
+Platform 140 20 1869 1142 
+Platform 540 20 2300 1308 
+
+Mouse 994 1271 1104 1271
+Mouse 754 548 894 548
+Mouse 2294 1266 2761 1266
+
+Coin 309 1140
+Coin 719 876
+Coin 1419 916
+Coin 335 229
+Coin 1263 296
+Coin 1877 270
+Coin 1984 1054
+Coin 2501 1175
+
+Wall 20 379 1721 1010
+Wall 20 379 1883 1010
+
+Cat 200 1210
+Finish 2474 1168
+DiePlatform 10500 20 -3500 3000

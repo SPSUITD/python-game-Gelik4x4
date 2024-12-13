@@ -1,0 +1,212 @@
+# Первая платформа
+StaticSprite rock1_b 0 1144 
+StaticSprite rock2_b 911 1144 
+StaticSprite rock2_f 911 1144 
+StaticSprite rock3_b 1195 1269 
+StaticSprite rock3_f 1195 1269 
+StaticSprite rock4_b 1366 1261 
+StaticSprite rock4_f 1366 1261 
+Platform 1905 20 20 1320 
+StaticSprite hang5_b 1384 1140 
+StaticSprite hang5_f 1384 1140 
+Platform 50 20 1414 1160 
+
+# Платформа слева от дома 1
+StaticSprite rock5_b 2105 1247 
+StaticSprite rock5_f 2105 1247 
+Platform 240 20 2130 1260 
+# Платформы слева на доме 1
+StaticSprite hang1_b 2158 1072 
+StaticSprite hang1_f 2158 1072 
+Platform 190 20 2178 1082 
+StaticSprite hang1_b 2182 880 
+StaticSprite hang1_f 2182 880 
+Platform 190 20 2202 890 
+StaticSprite hang1_b 2196 708 
+StaticSprite hang1_f 2196 708 
+Platform 190 20 2216 718 
+# Платформа справа от дома 1
+StaticSprite rock6_b 2417 1244 
+StaticSprite rock6_f 2417 1244 
+Platform 225 20 2370 1310 
+
+# Дом 1
+StaticSprite house1_b 2294 598 
+StaticSprite house1_f 2294 598 
+Wall 20 720 2294 640 
+Wall 20 720 2450 640 
+Platform 170 20 2294 640 
+
+StaticSprite hang1_b 2368 778 
+StaticSprite hang1_f 2368 778 
+StaticSprite hang9_b 2457 962 
+StaticSprite hang9_f 2457 962 
+
+
+StaticSprite rock7_b 2789 1244 
+StaticSprite rock7_f 2789 1244 
+
+StaticSprite hang1_b 3041 1163 
+StaticSprite hang1_f 3041 1163 
+StaticSprite house2_b 3132 985 
+StaticSprite house2_f 3132 985 
+
+StaticSprite rock8_b 3376 1244 
+StaticSprite rock8_f 3376 1244 
+StaticSprite rock9_b 3571 1157 
+StaticSprite rock9_f 3571 1157 
+StaticSprite house3_b 3723 1045 
+StaticSprite house3_f 3723 1045 
+StaticSprite rock10_b 4016 1254 
+StaticSprite rock10_f 4016 1254 
+StaticSprite hang16_b 4497 1154 
+StaticSprite hang16_f 4497 1154 
+StaticSprite hang1_b 4710 1044 
+StaticSprite hang1_f 4710 1044 
+StaticSprite house4_b 4624 945 
+StaticSprite house4_f 4624 945 
+StaticSprite rock11_b 4748 1251 
+StaticSprite rock11_f 4748 1251 
+
+StaticSprite hang1_b 1845 603 
+StaticSprite hang1_f 1845 603 
+StaticSprite hang7_b 1396 710 
+StaticSprite hang7_f 1396 710 
+StaticSprite hang3_b 411 619 
+StaticSprite hang3_f 411 619 
+StaticSprite hang1_b 147 457 
+StaticSprite hang1_f 147 457 
+StaticSprite hang2_b 457 365 
+StaticSprite hang2_f 457 365 
+StaticSprite hang1_b 899 428 
+StaticSprite hang1_f 899 428 
+StaticSprite hang4_b 1147 288 
+StaticSprite hang4_f 1147 288 
+StaticSprite hang6_b 1449 348 
+StaticSprite hang6_f 1449 348 
+StaticSprite hang1_b 1781 271 
+StaticSprite hang1_f 1781 271 
+StaticSprite hang8_b 2051 397 
+StaticSprite hang8_f 2051 397 
+StaticSprite hang10_b 2509 477 
+StaticSprite hang10_f 2509 477 
+StaticSprite hang11_b 3104 339 
+StaticSprite hang11_f 3104 339 
+StaticSprite hang12_b 3560 439 
+StaticSprite hang12_f 3560 439 
+StaticSprite hang21_b 3877 586 
+StaticSprite hang21_f 3877 586 
+StaticSprite hang20_b 4387 442 
+StaticSprite hang20_f 4387 442 
+StaticSprite hang19_f 4627 348 
+StaticSprite hang13_b 4832 245 
+StaticSprite hang13_f 4832 245 
+StaticSprite hang16_b 5230 415 
+StaticSprite hang16_f 5230 415 
+StaticSprite hang17_b 5056 498 
+StaticSprite hang17_f 5056 498 
+StaticSprite hang18_b 4868 633 
+StaticSprite hang18_f 4868 633 
+StaticSprite hang1_b 4757 790 
+StaticSprite hang1_f 4757 790 
+
+StaticSprite hang17_b 2588 1106 
+StaticSprite hang17_f 2588 1106 
+
+StaticSprite hang15_b 4043 912 
+StaticSprite hang15_f 4043 912 
+StaticSprite hang1_b 4241 1010 
+StaticSprite hang1_f 4241 1010 
+
+Platform 180 20 1859 615 
+Platform 260 20 1416 718 
+Platform 780 20 434 626 
+
+Platform 190 20 158 481 
+Platform 250 20 492 377 
+Platform 180 20 913 442 
+Platform 180 20 1164 302 
+Platform 180 20 1469 366 
+
+Platform 180 20 1798 287 
+Platform 200 20 2072 411 
+Platform 425 20 2541 500 
+
+Platform 130 20 2435 792 
+Platform 230 20 2447 976 
+Platform 140 20 2601 1127 
+Platform 170 20 2805 1292 
+Platform 85 20 3053 1174 
+
+Platform 195 20 3148 1128 
+Platform 380 20 3127 357 
+Platform 200 20 3580 465 
+Platform 200 20 3400 1267 
+Platform 135 20 3588 1173 
+
+Platform 215 20 3791 1072 
+Platform 380 20 3905 602 
+Platform 100 20 4060 919 
+Platform 180 20 4256 1024 
+Platform 630 20 4009 1310 
+
+Platform 115 20 4521 1166 
+Platform 150 20 4643 965 
+Platform 115 20 4789 1058 
+Platform 790 20 4789 1287 
+Platform 120 20 4401 467 
+
+Platform 120 20 4644 371 
+Platform 360 20 4850 268 
+Platform 160 20 5256 424 
+Platform 140 20 5071 521 
+Platform 170 20 4897 646 
+Platform 180 20 4774 805 
+
+Coin 1425 1105 
+Coin 707 298 
+Coin 708 557 
+Coin 1016 393 
+Coin 1618 317 
+Coin 1529 643 
+Coin 2199 844 
+Coin 2170 1204 
+Coin 2529 730 
+Coin 2640 1072 
+Coin 2501 1205 
+Coin 2916 440 
+Coin 3232 968 
+Coin 3661 1090 
+Coin 3697 301 
+Coin 4104 869 
+Coin 4334 1146 
+Coin 4426 336 
+Coin 5010 180 
+Coin 4946 473 
+Coin 4783 711 
+Coin 5002 1120 
+
+Mouse 409 584 1179 584 
+Mouse 463 330 716 330 
+Mouse 1447 322 1616 322 
+Mouse 1850 575 2004 575 
+Mouse 2520 453 2941 453 
+Mouse 2496 935 2635 935 
+Mouse 3383 1219 3523 1219 
+Mouse 3882 556 4252 556 
+Mouse 4245 982 4397 982 
+Mouse 4835 222 5175 222 
+Mouse 4833 1246 5163 1246 
+
+Wall 20 216 3133 1128
+Wall 20 216 3333 1128
+Wall 20 171 3703 1173
+Wall 20 272 3783 1072
+Wall 20 272 3995 1072
+Wall 20 379 4627 965
+Wall 20 379 4787 965
+
+Cat 364 1203
+Finish 5168 1142
+# Нижняя платформа смерти
+DiePlatform 10000 20 -1500 2500 
